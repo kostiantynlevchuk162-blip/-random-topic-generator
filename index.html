@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <title>TopicMaster</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="screen active" id="screen-home">
+      <div class="hero">
+        <div class="logo">🎤</div>
+        <p class="eyebrow">ТРЕНАЖЁР ВЫСТУПЛЕНИЙ</p>
+        <h1>TopicMaster</h1>
+        <p class="subtitle">Выбери категории, раскрути рулетку, подготовь презентацию и выступи.</p>
+        <button class="primary big" id="homeStart">Начать тренировку</button>
+        <button class="secondary home-history" id="homeHistory">История тем</button>
+        <div class="stats-row">
+          <div><strong id="topicCount">0</strong><span>тем</span></div>
+          <div><strong id="categoryCount">0</strong><span>категорий</span></div>
+          <div><strong>2</strong><span>этапа</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-setup">
+      <header class="topbar">
+        <button class="icon-btn" data-back="home" aria-label="Назад">←</button>
+        <div><p class="eyebrow">ШАГ 1</p><h2>Настройка</h2></div>
+      </header>
+
+      <div class="panel">
+        <div class="section-head">
+          <div>
+            <h3>Категории</h3>
+            <p>Можно выбрать несколько</p>
+          </div>
+          <button class="text-btn" id="toggleAll">Снять все</button>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+        <p class="inline-error hidden" id="categoryError">Выбери хотя бы одну категорию.</p>
+      </div>
+
+      <div class="panel two-columns">
+        <div>
+          <h3>Подготовка</h3>
+          <div class="option-row" id="prepOptions">
+            <button data-minutes="5">5 мин</button>
+            <button data-minutes="15">15 мин</button>
+            <button data-minutes="30">30 мин</button>
+            <button data-minutes="60" class="selected">60 мин</button>
+          </div>
+        </div>
+        <div>
+          <h3>Выступление</h3>
+          <div class="option-row" id="speechOptions">
+            <button data-minutes="1" class="selected">1 мин</button>
+            <button data-minutes="3">3 мин</button>
+            <button data-minutes="5">5 мин</button>
+            <button data-minutes="10">10 мин</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="primary sticky-action" id="toRoulette">Перейти к рулетке</button>
+    </section>
+
+    <section class="screen" id="screen-roulette">
+      <header class="topbar">
+        <button class="icon-btn" data-back="setup" aria-label="Назад">←</button>
+        <div><p class="eyebrow">ШАГ 2</p><h2>Рулетка тем</h2></div>
+      </header>
+
+      <div class="roulette-card">
+        <div class="roulette-window">
+          <div class="selector-line"></div>
+          <div id="reel" class="reel"></div>
+          <div class="fade fade-top"></div>
+          <div class="fade fade-bottom"></div>
+        </div>
+        <p class="roulette-hint" id="rouletteHint">Темы из выбранных категорий перемешаны</p>
+        <button class="primary big" id="spinButton">Крутить рулетку</button>
+        <button class="secondary hidden" id="acceptTopic">Принять тему</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-prep">
+      <header class="topbar">
+        <button class="icon-btn" id="exitPrep" aria-label="Выйти">×</button>
+        <div><p class="eyebrow">ПОДГОТОВКА</p><h2 id="prepTopic">Тема</h2></div>
+      </header>
+
+      <div class="timer-card">
+        <div class="timer-label">Осталось времени</div>
+        <div class="timer" id="prepTimer">60:00</div>
+        <div class="progress"><span id="prepProgress"></span></div>
+        <div class="timer-actions">
+          <button class="secondary" id="prepPause">Пауза</button>
+          <button class="danger-ghost" id="prepSkip">Начать выступление</button>
+        </div>
+      </div>
+
+      <div class="panel notes-panel">
+        <div class="section-head">
+          <div><h3>Заметки</h3><p>Сохраняются автоматически</p></div>
+          <button class="text-btn" id="clearNotes">Очистить</button>
+        </div>
+        <textarea id="notes" placeholder="Например:
+1. Определение
+2. История появления
+3. Пример
+4. Почему это важно
+5. Вывод"></textarea>
+      </div>
+    </section>
+
+    <section class="screen presentation-screen" id="screen-speech">
+      <div class="speech-content">
+        <p class="eyebrow">ВЫСТУПЛЕНИЕ</p>
+        <h2 id="speechTopic">Тема</h2>
+        <div class="timer speech-timer" id="speechTimer">01:00</div>
+        <div class="progress"><span id="speechProgress"></span></div>
+        <div class="timer-actions">
+          <button class="secondary" id="speechPause">Пауза</button>
+          <button class="danger-ghost" id="speechFinish">Завершить</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-done">
+      <div class="done-card">
+        <div class="done-icon">✓</div>
+        <p class="eyebrow">ГОТОВО</p>
+        <h2>Выступление завершено</h2>
+        <p class="done-topic" id="doneTopic"></p>
+        <div class="done-actions">
+          <button class="primary" id="newTopic">Новая тема</button>
+          <button class="secondary" id="doneHistory">История тем</button>
+          <button class="secondary" id="backHome">На главную</button>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="screen" id="screen-history">
+      <header class="topbar">
+        <button class="icon-btn" id="historyBack" aria-label="Назад">←</button>
+        <div><p class="eyebrow">ИСТОРИЯ</p><h2>Выпавшие темы</h2></div>
+      </header>
+
+      <div class="panel">
+        <div class="section-head">
+          <div><h3 id="historyCount">0 тем</h3><p>Темы не повторяются, пока набор не закончится</p></div>
+          <button class="text-btn danger-text" id="clearHistory">Очистить</button>
+        </div>
+        <div class="history-list" id="historyList"></div>
+        <p class="empty-history hidden" id="historyEmpty">История пока пустая.</p>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast hidden" id="toast"></div>
+  <script src="topics.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
